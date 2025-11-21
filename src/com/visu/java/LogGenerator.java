@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class LogGenerator {
 	
-	public static List<String> generateLogs(int totalLogs){
+	public static List<String> generateLogs(long totalLogs){
 		
 		if(totalLogs<=0) throw new IllegalArgumentException("Invalid number of logs requested: "+ totalLogs);
 		
@@ -19,7 +19,7 @@ public class LogGenerator {
 
 	    Random random = new Random();
 
-	    List<String> logs = new ArrayList<>(totalLogs);
+	    List<String> logs = new ArrayList<>();
 	    for (int i = 0; i < totalLogs; i++) {
 	        String timestamp = "2025-11-20T01:00:" + (i % 60) + "Z";
 	        String userId = users.get(random.nextInt(users.size()));
