@@ -6,6 +6,12 @@ public class Tester {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
+		
+		//generate logs
+		//int numberOfLogs = 100000000;
+		//LogGenerator.generateTestLogsToFile("logs.txt", numberOfLogs);
+
+		
 		long startTime = System.currentTimeMillis();
 		ExecutorServiceWithMapReduce mapreduce =  new ExecutorServiceWithMapReduce();
 		mapreduce.computeStats();
@@ -17,8 +23,6 @@ public class Tester {
 		executorService.computeStats();
 		endTime = System.currentTimeMillis();
 		System.out.println("total time in seconds: "+ (endTime-startTime)/1000);
-//		ExecutorServiceMultiKeyAggregation executorService = new ExecutorServiceMultiKeyAggregation();
-
 	}
 
 }

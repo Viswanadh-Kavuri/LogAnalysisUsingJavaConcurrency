@@ -12,12 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ExecutorServiceStreamingInput {
 	
 
-	public int getGlobalMaxvalue(int numberOfLogs) throws InterruptedException, IOException {
+	public int getGlobalMaxvalue() throws InterruptedException, IOException {
 		int cores = Utils.getCores();
-		//write logs to file
-			LogGenerator.generateTestLogsToFile("logs.txt", numberOfLogs);
-		
-		
+			
 		ExecutorService executor = Executors.newFixedThreadPool(cores);
 		
 		ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(10_000);
