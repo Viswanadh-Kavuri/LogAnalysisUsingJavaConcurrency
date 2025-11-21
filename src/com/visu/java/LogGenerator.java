@@ -38,7 +38,7 @@ public class LogGenerator {
 		
 	}
 	
-	private static void generateTestLogsToFile(String outputFile, int totalLogs) throws IOException {
+	public static void generateTestLogsToFile(String outputFile, int totalLogs) throws IOException {
 	    List<String> endpoints = Arrays.asList("/home", "/cart", "/search", "/order", "/profile");
 	    List<String> users = Arrays.asList("u1", "u2", "u3", "u4", "u5");
 
