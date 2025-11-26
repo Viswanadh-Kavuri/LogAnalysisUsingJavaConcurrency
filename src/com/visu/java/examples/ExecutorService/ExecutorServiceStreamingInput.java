@@ -1,4 +1,4 @@
-package com.visu.java;
+package com.visu.java.examples.ExecutorService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,10 +9,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ExecutorServiceStreamingInput {
+import com.visu.java.Utils;
+import com.visu.java.models.LogStatsResult;
+
+public class ExecutorServiceStreamingInput implements LogStatsCalculator {
 	
 
-	public int getGlobalMaxvalue() throws InterruptedException, IOException {
+	@Override
+	public LogStatsResult computeStats(String logFilePath) {
 		int cores = Utils.getCores();
 			
 		ExecutorService executor = Executors.newFixedThreadPool(cores);
@@ -62,9 +66,13 @@ public class ExecutorServiceStreamingInput {
 		});
 		
 		producer.shutdown();
-		producer.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		
-		return globalMaxValue.get();
+		try {
+			producer.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return LogStatsResult.builder().maxResponseTime(globalMaxValue.get()).build();
 		
 	}
 

@@ -1,4 +1,4 @@
-package com.visu.java;
+package com.visu.java.examples.ExecutorService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,9 +10,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ExecutorServiceMultiKeyAggregation {
+import com.visu.java.Utils;
+import com.visu.java.models.LogStatsResult;
+
+public class ExecutorServiceMultiKeyAggregation implements LogStatsCalculator {
 	
-	public  void computeStats() {
+	@Override
+	public LogStatsResult computeStats(String logFilePath) {
 		final int cores = Utils.getCores();
 		ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(10_000);
 		AtomicInteger globalMaxValue = new AtomicInteger(Integer.MIN_VALUE);
@@ -83,6 +87,10 @@ public class ExecutorServiceMultiKeyAggregation {
 				System.out.println("requestsperuser"+ requestsPerUser);
 				System.out.println("maxResponsePerEndPoint "+maxResponsePerEndpoint);
 			}
+			return LogStatsResult.builder()
+					.maxResponseTime(globalMaxValue.get())
+					.maxResponsePerEndpoint(maxResponsePerEndpoint)
+					.requestsPerUser(requestsPerUser)
+					.build();
 	}
-
 }

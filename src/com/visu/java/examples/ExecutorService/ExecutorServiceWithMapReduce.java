@@ -1,4 +1,4 @@
-package com.visu.java;
+package com.visu.java.examples.ExecutorService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,10 +11,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class ExecutorServiceWithMapReduce {
+import com.visu.java.Utils;
+import com.visu.java.models.LogStatsResult;
+
+public class ExecutorServiceWithMapReduce implements LogStatsCalculator {
 		
-		public  void computeStats() {
-			final int cores = Utils.getCores();
+	@SuppressWarnings("finally")
+	@Override
+	public LogStatsResult computeStats(String logFilePath) {
+		final int cores = Utils.getCores();
 			final String POISON_PILL = "__END__";
 			ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(10_000);
 			
@@ -100,7 +105,13 @@ public class ExecutorServiceWithMapReduce {
 					System.out.println("GlobalMaxValue is "+globalMaxValue);
 					System.out.println("globalRequestsPerUser"+ globalRequestsPerUser);
 					System.out.println("globalMaxResponsePerEndPoint "+globalMaxResponsePerEndPoint);
+					return LogStatsResult.builder()
+							.maxResponseTime(globalMaxValue)
+							.requestsPerUser(globalRequestsPerUser)
+							.maxResponsePerEndpoint(globalMaxResponsePerEndPoint)
+							.build();
 				}
+				
 		}
 
 	}
